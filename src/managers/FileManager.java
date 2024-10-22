@@ -1,6 +1,14 @@
+package managers;
+
+import Exceptions.FileReadException;
+import Exceptions.FileWriteException;
+import model.Book;
+import model.Car;
+import model.RootVegetable;
+import model.type.typeClass;
+
 import java.io.*;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class FileManager {
     private final File file;
@@ -9,7 +17,7 @@ public class FileManager {
     private final List<RootVegetable> rootVegetableList;
     private final MemoryManager memoryManager;
 
-    FileManager(File file, MemoryManager memoryManager) {
+    public FileManager(File file, MemoryManager memoryManager) {
         this.file = file;
         this.memoryManager = memoryManager;
         this.bookList = memoryManager.getBookList();
@@ -113,73 +121,4 @@ public class FileManager {
             default -> typeClass.UNKNOWN;
         };
     }
-
-
-    // старая реализация с пробелами в файле записи
-    /*private void saveBookData() throws FileWriteException {
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            if (bookList.isEmpty())
-                fileWriter.write("\n");
-            else
-                for (Book book : bookList)
-                    fileWriter.write(parseDataToCsv(book) + "\n");
-            fileWriter.write("\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new FileWriteException("Ошибка записи в файл");
-        }
-
-    }
-
-    private void saveCarData() throws FileWriteException {
-        try {
-            FileWriter fileWriter = new FileWriter(file, true);
-            if (carList.isEmpty())
-                fileWriter.write("\n");
-            else
-                for (Car car : carList)
-                    fileWriter.write(parseDataToCsv(car) + "\n");
-            fileWriter.write("\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new FileWriteException("Ошибка записи в файл");
-        }
-    }
-
-    private void saveRootVegetableData() throws FileWriteException {
-        try {
-            FileWriter fileWriter = new FileWriter(file, true);
-            if (rootVegetableList.isEmpty())
-                fileWriter.write("\n");
-            else
-                for (RootVegetable rootVegetable : rootVegetableList)
-                    fileWriter.write(parseDataToCsv(rootVegetable) + "\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new FileWriteException("Ошибка записи в файл");
-        }
-    }
-
-    public void save() {
-        if (!bookList.isEmpty())
-            saveBookData();
-        if (!carList.isEmpty())
-            saveCarData();
-        if (!rootVegetableList.isEmpty())
-            saveRootVegetableData();
-    }*/
-
-    // для загрузки из файла перенсти в FileManager
-    /*public Book loadBookData(String name, String author, int numberOfPages) {
-        return new Book.BookBuilder(name).setAuthor(author).setNumberOfPages(numberOfPages).build();
-    }
-
-    public Car loadCarData(String model, int horsePower, int yearProduction) {
-        return new Car.CarBuilder(model).setHorsePower(horsePower).setYearProduction(yearProduction).build();
-    }
-
-    public RootVegetable loadRootVegetableData(rootVegetableType type, double weight, rootVegetableColor color) {
-        return new RootVegetable.RootVegetableBuilder(type).setWeight(weight).setColor(color).build();
-    }*/
 }

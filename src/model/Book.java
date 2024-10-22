@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 
 public class Book implements Comparable<Book> {
@@ -23,12 +25,12 @@ public class Book implements Comparable<Book> {
         return author;
     }
 
-    static class BookBuilder {
+    public static class BookBuilder {
         private final String name;
         private String author;
         private int numberOfPages;
 
-        BookBuilder(String name) {
+        public BookBuilder(String name) {
             this.name = name;
         }
 
@@ -82,10 +84,5 @@ public class Book implements Comparable<Book> {
         return "Название: " + name +
                 ", Автор: " + ((author == null) ? "не указан" : author) +
                 ", Кол-во страниц: " + ((numberOfPages > 0) ? numberOfPages : "не указано");
-    }
-
-    public static void main(String[] args) {
-        Book book = new BookBuilder("Отелло").setNumberOfPages(1).setAuthor("").build();
-        System.out.println(book);
     }
 }

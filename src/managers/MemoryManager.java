@@ -1,3 +1,9 @@
+package managers;
+
+import model.Book;
+import model.Car;
+import model.RootVegetable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,7 +12,7 @@ public class MemoryManager {
     private final List<Car> carList;
     private final List<RootVegetable> rootVegetableList;
 
-    MemoryManager() {
+    public MemoryManager() {
         bookList = new ArrayList<>();
         carList = new ArrayList<>();
         rootVegetableList = new ArrayList<>();

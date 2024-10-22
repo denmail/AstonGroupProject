@@ -1,9 +1,16 @@
+package Inputters;
+
+import model.Book;
+import model.Car;
+import model.RootVegetable;
+import model.type.rootVegetableType;
+
 import java.util.List;
 
 public class DataRandomInputter {
     private static final List<Car> cars = List.of(
             new Car.CarBuilder("AUDI").setPower(180).setYear(2022).build(),
-            new Car.CarBuilder("BWM").setPower(340).setYear(2024).build(),
+            new Car.CarBuilder("BMW").setPower(340).setYear(2024).build(),
             new Car.CarBuilder("Mercedes").setPower(160).setYear(2020).build(),
             new Car.CarBuilder("Жигули").setPower(73).setYear(1990).build()
     );

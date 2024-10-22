@@ -1,3 +1,11 @@
+package Inputters;
+
+import model.Book;
+import model.Car;
+import model.RootVegetable;
+import model.type.rootVegetableType;
+
+
 import java.util.Scanner;
 
 public class DataInputter {

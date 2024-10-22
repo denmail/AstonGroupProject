@@ -1,3 +1,7 @@
+package model;
+
+import model.type.rootVegetableType;
+
 import java.util.*;
 
 public class RootVegetable implements Comparable<RootVegetable> {
@@ -64,12 +68,12 @@ public class RootVegetable implements Comparable<RootVegetable> {
                 ", Цвет: " + ((color == null) ? "не указан" : color);
     }
 
-    static class RootVegetableBuilder {
+    public static class RootVegetableBuilder {
         private final rootVegetableType type;
         private double weight;
         private String color;
 
-        RootVegetableBuilder(rootVegetableType type) {
+        public RootVegetableBuilder(rootVegetableType type) {
             this.type = type;
         }
 
@@ -92,21 +96,5 @@ public class RootVegetable implements Comparable<RootVegetable> {
         public RootVegetable build() {
             return new RootVegetable(this);
         }
-    }
-
-    public static void main(String[] args) {
-        RootVegetable rootVegetable = new RootVegetableBuilder(rootVegetableType.ASTER).setWeight(22)
-                .setColor("Синий").build();
-        RootVegetable rootVegetable1 = new RootVegetableBuilder(rootVegetableType.ASTER).setWeight(22)
-                .setColor("").build();
-
-
-        System.out.println(rootVegetable1);
-
-
-        for (int i = 0; i < 100; i++)
-            System.out.println((int)(Math.random() * 4));
-
-        //System.out.println(rootVegetable.compareTo(rootVegetable1));
     }
 }

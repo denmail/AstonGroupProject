@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 
 public class Car implements Comparable<Car>{
@@ -54,12 +56,12 @@ public class Car implements Comparable<Car>{
                 ", Год производства: " + ((year > 0) ? power : " не указан ");
     }
 
-    static class CarBuilder {
+    public static class CarBuilder {
         private final String model;
         private int horsePower;
         private int yearProduction;
 
-        CarBuilder(String model) {
+        public CarBuilder(String model) {
             this.model = model;
         }
 
@@ -84,12 +86,5 @@ public class Car implements Comparable<Car>{
         public Car build() {
             return new Car(this);
         }
-    }
-
-    public static void main(String[] args) {
-        Car car = new CarBuilder("BMW").setPower(150).setYear(2024).build();
-        Car car2 = new CarBuilder("BMW").setPower(150).setYear(2023).build();
-
-        System.out.println(car.compareTo(car2));
     }
 }

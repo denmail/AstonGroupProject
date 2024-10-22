@@ -1,3 +1,5 @@
+package model.type;
+
 public enum typeClass {
     BOOK,
     CAR,
