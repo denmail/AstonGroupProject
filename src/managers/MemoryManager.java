@@ -1,8 +1,6 @@
 package managers;
 
-import model.Book;
-import model.Car;
-import model.RootVegetable;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,9 @@
 package managers;
 
-import Exceptions.FileReadException;
-import Exceptions.FileWriteException;
-import model.Book;
-import model.Car;
-import model.RootVegetable;
+import static converter.Parser.*;
+
+import exceptions.*;
+import model.*;
 import model.type.typeClass;
 
 import java.io.*;
@@ -29,7 +28,7 @@ public class FileManager {
         try {
             FileWriter fileWriter = new FileWriter(file);
             for (Book book : bookList)
-                fileWriter.write(parseDataToCsv(book) + "\n");
+                fileWriter.write(parseDataToString(book) + "\n");
             fileWriter.close();
         } catch (IOException e) {
             throw new FileWriteException("Ошибка записи в файл");
@@ -41,7 +40,7 @@ public class FileManager {
         try {
             FileWriter fileWriter = new FileWriter(file, true);
             for (Car car : carList)
-                fileWriter.write(parseDataToCsv(car) + "\n");
+                fileWriter.write(parseDataToString(car) + "\n");
             fileWriter.close();
         } catch (IOException e) {
             throw new FileWriteException("Ошибка записи в файл");
@@ -52,7 +51,7 @@ public class FileManager {
         try {
             FileWriter fileWriter = new FileWriter(file, true);
             for (RootVegetable rootVegetable : rootVegetableList)
-                fileWriter.write(parseDataToCsv(rootVegetable) + "\n");
+                fileWriter.write(parseDataToString(rootVegetable) + "\n");
             fileWriter.close();
         } catch (IOException e) {
             throw new FileWriteException("Ошибка записи в файл");
@@ -74,43 +73,18 @@ public class FileManager {
             while (bufferedReader.ready()) {
                 String data = bufferedReader.readLine();
                 switch (getTypeData(data)) {
-                    case typeClass.BOOK -> memoryManager.addBook(parseCsvToBookData(data));
-                    case typeClass.CAR -> memoryManager.addCar(parseCsvToCarData(data));
-                    case typeClass.ROOT_VEGETABLE -> memoryManager.addRootVegetable(parseCsvToRootVegetableData(data));
+                    case typeClass.BOOK -> memoryManager.addBook(parseStringToBookData(data));
+                    case typeClass.CAR -> memoryManager.addCar(parseStringToCarData(data));
+                    case typeClass.ROOT_VEGETABLE ->
+                            memoryManager.addRootVegetable(parseStringToRootVegetableData(data));
                 }
             }
+            bufferedReader.close();
         } catch (IOException e) {
-            throw  new FileReadException("Ошибка чтения файла.");
+            throw new FileReadException("Ошибка чтения файла.");
         }
     }
 
-    private static String parseDataToCsv(Book book) {
-        return "BOOK," + book.getName() + "," + book.getAuthor() + "," + book.getNumberOfPages();
-    }
-
-    private static String parseDataToCsv(Car car) {
-        return "CAR," + car.getModel() + "," + car.getPower() + "," + car.getYear();
-    }
-
-    private static String parseDataToCsv(RootVegetable rootVegetable) {
-        return "ROOT_VEGETABLE," + rootVegetable.getType() + "," + rootVegetable.getWeight() + "," + rootVegetable.getColor();
-    }
-
-    private static Book parseCsvToBookData(String csvData) {
-        String[] data = csvData.split(",");
-        return new Book.BookBuilder(data[1]).setAuthor(data[2]).setNumberOfPages(Integer.parseInt(data[3])).build();
-    }
-
-    private static Car parseCsvToCarData(String csvData) {
-        String[] data = csvData.split(",");
-        return new Car.CarBuilder(data[1]).setPower(Integer.parseInt(data[2])).setPower(Integer.parseInt(data[3])).build();
-    }
-
-    private static RootVegetable parseCsvToRootVegetableData(String csvData) {
-        String[] data = csvData.split(",");
-        return new RootVegetable.RootVegetableBuilder(RootVegetable.getType(data[1]))
-                .setWeight(Double.parseDouble(data[2])).setColor(data[3]).build();
-    }
 
     private typeClass getTypeData(String csvData) {
         String[] data = csvData.split(",");

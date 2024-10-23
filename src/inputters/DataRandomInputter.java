@@ -1,8 +1,6 @@
-package Inputters;
+package inputters;
 
-import model.Book;
-import model.Car;
-import model.RootVegetable;
+import model.*;
 import model.type.rootVegetableType;
 
 import java.util.List;

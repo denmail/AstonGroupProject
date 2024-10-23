@@ -53,10 +53,10 @@ public class RootVegetable implements Comparable<RootVegetable> {
 
     @Override
     public int compareTo(RootVegetable o) {
-        if (!Objects.equals(this.type, o.type))
-            return this.type.compareTo(o.type);
-        else if (this.weight != o.weight)
+        if (this.weight != o.weight)
             return (int) ((this.weight * 10) - (o.weight * 10));
+        else if (!Objects.equals(this.type, o.type))
+            return this.type.compareTo(o.type);
         else
             return this.color.compareTo(o.color);
     }
@@ -78,18 +78,12 @@ public class RootVegetable implements Comparable<RootVegetable> {
         }
 
         public RootVegetableBuilder setWeight(double weight) {
-            if (weight <= 0)
-                System.out.println("Вес не может быть 0 гр. и менее");
-            else
-                this.weight =weight;
+            this.weight =weight;
             return this;
         }
 
         public RootVegetableBuilder setColor(String color) {
-            if (color.isEmpty())
-                System.out.println("Вы не указали цвет корнеплода");
-            else
-                this.color = color;
+            this.color = color;
             return this;
         }
 

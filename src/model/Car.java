@@ -66,20 +66,12 @@ public class Car implements Comparable<Car>{
         }
 
         public CarBuilder setPower(int horsePower) {
-            if (horsePower <= 0)
-                System.out.println("Мощность должна быть положительным числом");
-            else
-                this.horsePower = horsePower;
+            this.horsePower = horsePower;
             return this;
         }
 
         public CarBuilder setYear(int yearProduction) {
-            if (yearProduction < 1885)
-                System.out.println("Первый в мире автомобиль был изобретён в 1885 году");
-            else if (yearProduction > 2024)
-                System.out.println("Сейчас 2024й год, будущее еще не наступило");
-            else
-                this.yearProduction = yearProduction;
+            this.yearProduction = yearProduction;
             return this;
         }
 

@@ -1,7 +1,5 @@
-import Inputters.DataInputter;
-import Inputters.DataRandomInputter;
-import managers.FileManager;
-import managers.MemoryManager;
+import inputters.*;
+import managers.*;
 
 import java.io.File;
 import java.util.Scanner;
@@ -33,7 +31,7 @@ public class Main {
                 break;
             switch (choice) {
                 case 1:
-                    System.out.println("Введите тип данных (1. model.Book, 2. model.Car, 3. model.RootVegetable)");
+                    System.out.println("Введите тип данных (1. Book, 2. Car, 3. RootVegetable)");
                     choice = scanner.nextInt();
                     switch (choice) {
                         case 1:
@@ -50,7 +48,7 @@ public class Main {
                     }
                     break;
                 case 2:
-                    System.out.println("Введите тип данных (1. model.Book, 2. model.Car, 3. model.RootVegetable");
+                    System.out.println("Введите тип данных (1. Book, 2. Car, 3. RootVegetable");
                     choice = scanner.nextInt();
                     switch (choice) {
                         case 1:

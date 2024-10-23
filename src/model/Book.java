@@ -35,18 +35,12 @@ public class Book implements Comparable<Book> {
         }
 
         public BookBuilder setAuthor(String author) {
-            if (author.isEmpty())
-                System.out.println("Вы не указали автора");
-            else
-                this.author = author;
+            this.author = author;
             return this;
         }
 
         public BookBuilder setNumberOfPages(int numberOfPages) {
-            if (numberOfPages <= 0)
-                System.out.println("Количество страниц должно быть положительным числом");
-            else
-                this.numberOfPages = numberOfPages;
+            this.numberOfPages = numberOfPages;
             return this;
         }
 
