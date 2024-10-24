@@ -1,3 +1,0 @@
-BOOK,Ромео и Джульетта,У.Шекспир,384
-CAR,Mercedes,160,2020
-ROOT_VEGETABLE,UMBRELLA,399.4,Серый

@@ -75,7 +75,8 @@ public class Book implements Comparable<Book> {
 
     @Override
     public String toString() {
-        return "Название: " + name +
+        return  "{Книга} " +
+                "Название: " + name +
                 ", Автор: " + ((author == null) ? "не указан" : author) +
                 ", Кол-во страниц: " + ((numberOfPages > 0) ? numberOfPages : "не указано");
     }

@@ -16,18 +16,26 @@ public class MemoryManager {
         rootVegetableList = new ArrayList<>();
     }
 
-    public void addBook(Book book) {
-        bookList.add(book);
+    public void add(Book book) {
+        if (!bookList.contains(book)) {
+            bookList.add(book);
+            System.out.println("Объект " + book + " был успешно добавлен в хранилище");
+        }
     }
 
-    public void addCar(Car car) {
-        carList.add(car);
+    public void add(Car car) {
+        if (!carList.contains(car)) {
+            carList.add(car);
+            System.out.println("Объект " + car + " был успешно добавлен в хранилище");
+        }
     }
 
-    public void addRootVegetable(RootVegetable rootVegetable) {
-        rootVegetableList.add(rootVegetable);
+    public void add(RootVegetable rootVegetable) {
+        if (!rootVegetableList.contains(rootVegetable)) {
+            rootVegetableList.add(rootVegetable);
+            System.out.println("Объект " + rootVegetable + " был успешно добавлен в хранилище");
+        }
     }
-
 
     public List<Book> getBookList() {
         return bookList;

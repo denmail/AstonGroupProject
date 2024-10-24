@@ -2,15 +2,15 @@ package model;
 
 import java.util.Objects;
 
-public class Car implements Comparable<Car>{
+public class Car implements Comparable<Car> {
     private final String model;
     private final int power;
     private final int year;
 
     private Car(CarBuilder carBuilder) {
         this.model = carBuilder.model;
-        this.power = carBuilder.horsePower;
-        this.year = carBuilder.yearProduction;
+        this.power = carBuilder.power;
+        this.year = carBuilder.year;
     }
 
     public String getModel() {
@@ -51,27 +51,28 @@ public class Car implements Comparable<Car>{
 
     @Override
     public String toString() {
-        return "Модель :" + model +
+        return  "{Автомобиль} " +
+                "Модель: " + model +
                 ", Мощность: " + ((power > 0) ? power + " лс" : " не указано") +
-                ", Год производства: " + ((year > 0) ? power : " не указан ");
+                ", Год производства: " + ((year > 0) ? year : " не указан ");
     }
 
     public static class CarBuilder {
         private final String model;
-        private int horsePower;
-        private int yearProduction;
+        private int power;
+        private int year;
 
         public CarBuilder(String model) {
             this.model = model;
         }
 
-        public CarBuilder setPower(int horsePower) {
-            this.horsePower = horsePower;
+        public CarBuilder setPower(int power) {
+            this.power = power;
             return this;
         }
 
-        public CarBuilder setYear(int yearProduction) {
-            this.yearProduction = yearProduction;
+        public CarBuilder setYear(int year) {
+            this.year = year;
             return this;
         }
 

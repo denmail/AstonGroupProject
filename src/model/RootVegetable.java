@@ -63,7 +63,8 @@ public class RootVegetable implements Comparable<RootVegetable> {
 
     @Override
     public String toString() {
-        return "Тип: " + type +
+        return  "{Корнеплод} " +
+                "Тип: " + type +
                 ", Вес: " + ((weight > 0) ? weight : "не указан") +
                 ", Цвет: " + ((color == null) ? "не указан" : color);
     }
@@ -78,7 +79,7 @@ public class RootVegetable implements Comparable<RootVegetable> {
         }
 
         public RootVegetableBuilder setWeight(double weight) {
-            this.weight =weight;
+            this.weight = weight;
             return this;
         }
 

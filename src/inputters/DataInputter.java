@@ -1,23 +1,25 @@
 package inputters;
 
 import static validate.Validator.*;
+import static converter.Parser.*;
 
-import converter.Parser;
 import model.*;
 import model.type.rootVegetableType;
+
 import java.util.Scanner;
 
 public class DataInputter {
-    private static final Scanner scanner = new Scanner(System.in);
 
     public static Book inputBookData() {
         while (true) {
-            System.out.println("Введите через пробел название книги, автора и кол-во страниц: ");
-            String data = scanner.nextLine();
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Введите название книги: ");
+            String name = scanner.nextLine();
+            System.out.println("Введите автора книги: ");
+            String author = scanner.nextLine();
+            System.out.println("Введите количество страниц книги: ");
+            int numberOfPages = scanner.nextInt();
 
-            String name = Parser.getBookName(data);
-            String author = Parser.getBookAuthor(data);
-            int numberOfPages = Parser.getBookNumberOfPages(data);
             if (validateBookData(name, author, numberOfPages))
                 return new Book.BookBuilder(name).setAuthor(author).setNumberOfPages(numberOfPages).build();
         }
@@ -25,12 +27,13 @@ public class DataInputter {
 
     public static Car inputCarData() {
         while (true) {
-            System.out.println("Введите через пробел модель, мощность и год выпуска: ");
-            String data = scanner.nextLine();
-
-            String model = Parser.getCarModel(data);
-            int power = Parser.getCarPower(data);
-            int year = Parser.getCarYear(data);
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Введите модель автомобиля: ");
+            String model = scanner.nextLine();
+            System.out.println("Введите мощность автомобиля: ");
+            int power = scanner.nextInt();
+            System.out.println("Введите год выпуска автомобиля: ");
+            int year = scanner.nextInt();
 
             if (validateCarData(model, power, year))
                 return new Car.CarBuilder(model).setPower(power).setYear(year).build();
@@ -39,12 +42,14 @@ public class DataInputter {
 
     public static RootVegetable inputRootVegetableData() {
         while (true) {
-            System.out.println("Введите через пробел тип корнеплода (ASTER, CABBAGE, GOOSEFOOT, UMBRELLA), вес и цвет: ");
-            String data = scanner.nextLine();
-
-            rootVegetableType type = Parser.getRootVegetableType(data);
-            double weight = Parser.getRootVegetableWeight(data);
-            String color = Parser.getRootVegetableColor(data);
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Введите тип корнеплода (ASTER, CABBAGE, GOOSEFOOT, UMBRELLA): ");
+            String inputType = scanner.nextLine();
+            rootVegetableType type = parseRootVegetableType(inputType);
+            System.out.println("Введите вес (ASTER, CABBAGE, GOOSEFOOT, UMBRELLA): ");
+            double weight = scanner.nextDouble();
+            System.out.println("Введите цвет корнеплода: ");
+            String color = scanner.nextLine();
 
             if (validateRootVegetableData(type, weight, color))
                 return new RootVegetable.RootVegetableBuilder(type).setWeight(weight).setColor(color).build();

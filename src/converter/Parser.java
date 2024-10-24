@@ -24,7 +24,7 @@ public class Parser {
 
     public static Car parseStringToCarData(String csvData) {
         String[] data = csvData.split(",");
-        return new Car.CarBuilder(data[1]).setPower(Integer.parseInt(data[2])).setPower(Integer.parseInt(data[3])).build();
+        return new Car.CarBuilder(data[1]).setPower(Integer.parseInt(data[2])).setYear(Integer.parseInt(data[3])).build();
     }
 
     public static RootVegetable parseStringToRootVegetableData(String csvData) {
@@ -33,37 +33,7 @@ public class Parser {
                 .setWeight(Double.parseDouble(data[2])).setColor(data[3]).build();
     }
 
-    public static String getBookName(String bookData) {
-        String[] data = bookData.split(" ");
-        return data[0];
-    }
-
-    public static String getBookAuthor(String bookData) {
-        String[] data = bookData.split(" ");
-        return data[1];
-    }
-
-    public static int getBookNumberOfPages(String bookData) {
-        String[] data = bookData.split(" ");
-        return Integer.parseInt(data[2]);
-    }
-
-    public static String getCarModel(String carData) {
-        String[] data = carData.split(" ");
-        return data[0];
-    }
-
-    public static int getCarPower(String carData) {
-        String[] data = carData.split(" ");
-        return Integer.parseInt(data[1]);
-    }
-
-    public static int getCarYear(String carData) {
-        String[] data = carData.split(" ");
-        return Integer.parseInt(data[2]);
-    }
-
-    public static rootVegetableType getRootVegetableType(String rootVegetableData) {
+    public static rootVegetableType parseRootVegetableType(String rootVegetableData) {
         String[] data = rootVegetableData.split(" ");
         return switch (data[0].toUpperCase()) {
             case "ASTER" -> rootVegetableType.ASTER;
@@ -72,15 +42,5 @@ public class Parser {
             case "UMBRELLA" -> rootVegetableType.UMBRELLA;
             default -> null;
         };
-    }
-
-    public static double getRootVegetableWeight(String rootVegetableData) {
-        String[] data = rootVegetableData.split(" ");
-        return Double.parseDouble(data[1]);
-    }
-
-    public static String getRootVegetableColor(String rootVegetableData) {
-        String[] data = rootVegetableData.split(" ");
-        return data[2];
     }
 }

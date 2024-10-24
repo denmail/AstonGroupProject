@@ -2,7 +2,6 @@ package managers;
 
 import static converter.Parser.*;
 
-import exceptions.*;
 import model.*;
 import model.type.typeClass;
 
@@ -24,47 +23,43 @@ public class FileManager {
         this.rootVegetableList = memoryManager.getRootVegetableList();
     }
 
-    private void saveBookData() throws FileWriteException {
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            for (Book book : bookList)
-                fileWriter.write(parseDataToString(book) + "\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new FileWriteException("Ошибка записи в файл");
-        }
-
+    private void saveBookData() throws IOException {
+        FileWriter fileWriter = new FileWriter(file);
+        for (Book book : bookList)
+            fileWriter.write(parseDataToString(book) + "\n");
+        fileWriter.close();
     }
 
-    private void saveCarData() throws FileWriteException {
-        try {
-            FileWriter fileWriter = new FileWriter(file, true);
-            for (Car car : carList)
-                fileWriter.write(parseDataToString(car) + "\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new FileWriteException("Ошибка записи в файл");
-        }
+    private void saveCarData() throws IOException {
+        FileWriter fileWriter = new FileWriter(file, true);
+        for (Car car : carList)
+            fileWriter.write(parseDataToString(car) + "\n");
+        fileWriter.close();
     }
 
-    private void saveRootVegetableData() throws FileWriteException {
-        try {
-            FileWriter fileWriter = new FileWriter(file, true);
-            for (RootVegetable rootVegetable : rootVegetableList)
-                fileWriter.write(parseDataToString(rootVegetable) + "\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            throw new FileWriteException("Ошибка записи в файл");
-        }
+    private void saveRootVegetableData() throws IOException {
+        FileWriter fileWriter = new FileWriter(file, true);
+        for (RootVegetable rootVegetable : rootVegetableList)
+            fileWriter.write(parseDataToString(rootVegetable) + "\n");
+        fileWriter.close();
     }
 
     public void save() {
-        if (!bookList.isEmpty())
-            saveBookData();
-        if (!carList.isEmpty())
-            saveCarData();
-        if (!rootVegetableList.isEmpty())
-            saveRootVegetableData();
+        try {
+            if (!bookList.isEmpty())
+                saveBookData();
+            if (!carList.isEmpty())
+                saveCarData();
+            if (!rootVegetableList.isEmpty())
+                saveRootVegetableData();
+            if (bookList.isEmpty() & carList.isEmpty() & rootVegetableList.isEmpty())
+                System.out.println("Введите данные для сохранения");
+            else
+                System.out.println("Сохранение данных");
+
+        } catch (IOException e) {
+            System.out.println("Ошибка записи в файл");
+        }
     }
 
     public void load() {
@@ -73,18 +68,17 @@ public class FileManager {
             while (bufferedReader.ready()) {
                 String data = bufferedReader.readLine();
                 switch (getTypeData(data)) {
-                    case typeClass.BOOK -> memoryManager.addBook(parseStringToBookData(data));
-                    case typeClass.CAR -> memoryManager.addCar(parseStringToCarData(data));
-                    case typeClass.ROOT_VEGETABLE ->
-                            memoryManager.addRootVegetable(parseStringToRootVegetableData(data));
+                    case typeClass.BOOK -> memoryManager.add(parseStringToBookData(data));
+                    case typeClass.CAR -> memoryManager.add(parseStringToCarData(data));
+                    case typeClass.ROOT_VEGETABLE -> memoryManager.add(parseStringToRootVegetableData(data));
                 }
             }
-            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Ошибка! Файл не найден.");
         } catch (IOException e) {
-            throw new FileReadException("Ошибка чтения файла.");
+            System.out.println("Ошибка чтения данных из файла!");
         }
     }
-
 
     private typeClass getTypeData(String csvData) {
         String[] data = csvData.split(",");

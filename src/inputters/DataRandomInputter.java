@@ -38,7 +38,7 @@ public class DataRandomInputter {
     }
 
     private static int getRandomNumber() {
-        return (int)(Math.random() * 4);
+        return (int) (Math.random() * 4);
     }
 
     public static Book getRandomBook() {
@@ -52,10 +52,6 @@ public class DataRandomInputter {
     public static RootVegetable getRandomRootVegetable() {
         return getRootVegetables().get(getRandomNumber());
     }
-
-
-
-
 
 
 }
