@@ -1,14 +1,15 @@
+package Interface;
 import java.util.Scanner;
 
 public class UserInterface {
 
-    private final SortManager sortManager;
-    private final SearchManager searchManager;
+    private final sortManager  ; //Сортировка (нужно передать класс по ней)
+    private final SearchManager searchManager; //Бинарный поиск
 
-    public UserInterface(SortManager sortManager, SearchManager searchManager) {
-        this.sortManager = sortManager;
-        this.searchManager = searchManager;
-    }
+//    public UserInterface(ShellSort shellSort, BinarySearch binarySearch) {
+//        this.SortManager = sortManager;
+//        this.SearchManager = searchManager;
+//    }
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
@@ -58,7 +59,7 @@ public class UserInterface {
         int type = scanner.nextInt();
         switch (type) {
             case 1:
-                sortManager.setDataType(Car.class);  // Устанавливаем тип Автомобиль
+                sortManager.setDataType(Car.class);  // Передача типа данных менеджеру сортировки
                 break;
             case 2:
                 sortManager.setDataType(Book.class);  // Устанавливаем тип Книга
