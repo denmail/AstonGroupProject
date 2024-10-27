@@ -6,10 +6,10 @@ public class UserInterface {
     private final sortManager  ; //Сортировка (нужно передать класс по ней)
     private final SearchManager searchManager; //Бинарный поиск
 
-//    public UserInterface(ShellSort shellSort, BinarySearch binarySearch) {
-//        this.SortManager = sortManager;
-//        this.SearchManager = searchManager;
-//    }
+    public UserInterface(ShellSort shellSort, BinarySearch binarySearch) {
+        this.SortManager = sortManager;
+        this.SearchManager = searchManager;
+    }
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
