@@ -1,47 +1,81 @@
-package Interface;
+package com.example.Interface;
+import com.example.algorithms.SearchExecutor;
+import com.example.algorithms.SortExecutor;
+import com.example.managers.FileManager;
+import com.example.managers.MemoryManager;
+import com.example.model.Book;
+import com.example.model.Car;
+import com.example.model.RootVegetable;
+
+import static com.example.converter.Parser.*;
+import static com.example.inputters.DataInputter.*;
+import static com.example.inputters.DataRandomInputter.*;
+
+import java.io.File;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class UserInterface {
 
-    private final sortManager  ; //Сортировка (нужно передать класс по ней)
-    private final SearchManager searchManager; //Бинарный поиск
-
-    public UserInterface(ShellSort shellSort, BinarySearch binarySearch) {
-        this.SortManager = sortManager;
-        this.SearchManager = searchManager;
+    private final SearchExecutor searchExecutor;
+    private final SortExecutor sortExecutor;
+    private final MemoryManager memoryManager = new MemoryManager();
+    private final FileManager fileManager;
+    private final Scanner scanner;
+    public UserInterface(SortExecutor sortExecutor, SearchExecutor searchExecutor) {
+        this.sortExecutor = sortExecutor;
+        this.searchExecutor = searchExecutor;
+        scanner = new Scanner(System.in);
+        fileManager = new FileManager(new File("data.txt"), memoryManager);
     }
 
     public void start() {
-        Scanner scanner = new Scanner(System.in);
+
 
         while (true) {
             System.out.println("Меню:");
-            System.out.println("1. Выбрать тип данных для сортировки");
-            System.out.println("2. Задать длину массива");
-            System.out.println("3. Выбрать метод заполнения данных (ручной ввод, файл или рандом)");
-            System.out.println("4. Выполнить сортировку");
-            System.out.println("5. Найти элемент с помощью бинарного поиска");
-            System.out.println("6. Выход");
+            System.out.println("1. Ввод данных вручную");
+            System.out.println("2. Ввод данных случайным образом");
+            System.out.println("3. Сохранить данные");
+            System.out.println("4. Загрузить из файла");
+            System.out.println("5. Задать длину массива");
+            System.out.println("6. Выполнить сортировку");
+            System.out.println("7. Найти элемент с помощью бинарного поиска");
+            System.out.println("8. Вывод данных на экран");
+            System.out.println("9. Отчистить данные");
+            System.out.println("10. Выход");
 
             int choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    chooseDataType(scanner);
+                    manualInput();
                     break;
                 case 2:
-                    setArrayLength(scanner);
+                    randomInput();
                     break;
                 case 3:
-                    chooseDataFillingMethod(scanner);
+                    fileManager.save();
                     break;
                 case 4:
-                    performSorting();
+                    fileManager.load();
                     break;
                 case 5:
-                    performBinarySearch(scanner);
+                    setArrayLength(scanner);
                     break;
                 case 6:
+                    performSorting();
+                    break;
+                case 7:
+                    performBinarySearch(scanner);
+                    break;
+                case 8:
+                    printData();
+                    break;
+                case 9:
+                    cleanData();
+                    break;
+                case 10:
                     System.out.println("Выход...");
                     return;
                 default:
@@ -50,69 +84,145 @@ public class UserInterface {
         }
     }
 
-    private void chooseDataType(Scanner scanner) {
-        System.out.println("Выберите тип данных: ");
-        System.out.println("1. Автомобиль");
-        System.out.println("2. Книга");
-        System.out.println("3. Корнеплод");
+    private void inputData(Boolean random) {
+        System.out.println("Введите тип данных (1. Book, 2. Car, 3. RootVegetable)");
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 1:
+                if (random) memoryManager.add(getRandomBook());
+                else memoryManager.add(inputBookData());
+                break;
+            case 2:
+                if (random) memoryManager.add(getRandomCar());
+                else memoryManager.add(inputCarData());
+                break;
+            case 3:
+                if (random) memoryManager.add(getRandomRootVegetable());
+                else memoryManager.add(inputRootVegetableData());
+                break;
+            default:
+                System.out.println("Неверный тип данных.");
+        }
+    }
 
+    private void manualInput() {
+        inputData(false);
+    }
+
+    private void randomInput() {
+        inputData(true);
+    }
+
+
+    private void setArrayLength(Scanner scanner) {
+        System.out.println("Выберите класс (1.Car 2.Book 3.RootVegetable):");
+        int type = scanner.nextInt();
+        System.out.println("Введите длину массива: ");
+        int length = scanner.nextInt();
+        switch (type) {
+            case 1:
+                memoryManager.setCarListLength(length);
+                break;
+            case 2:
+                memoryManager.setBookListLength(length);
+                break;
+            case 3:
+                memoryManager.setRootListLength(length);
+                break;
+            default:
+                setArrayLength(scanner);
+        }
+
+    }
+
+
+    private void performSorting() {
+        System.out.println("Введите тип данных для сортировки (1.Car 2.Book 3.RootVegetable):");
         int type = scanner.nextInt();
         switch (type) {
             case 1:
-                sortManager.setDataType(Car.class);  // Передача типа данных менеджеру сортировки
+                sortExecutor.sort(memoryManager.getCarList());
+                System.out.println("Сортировка завершена");
                 break;
             case 2:
-                sortManager.setDataType(Book.class);  // Устанавливаем тип Книга
+                sortExecutor.sort(memoryManager.getBookList());
+                System.out.println("Сортировка завершена");
                 break;
             case 3:
-                sortManager.setDataType(RootVegetable.class);  // Устанавливаем тип Корнеплод
+                sortExecutor.sort(memoryManager.getRootVegetableList());
+                System.out.println("Сортировка завершена");
                 break;
             default:
-                System.out.println("Неверный выбор!");
+                System.out.println("Неверный выбор");
         }
-    }
-
-    private void setArrayLength(Scanner scanner) {
-        System.out.println("Введите длину массива: ");
-        int length = scanner.nextInt();
-        sortManager.setArrayLength(length);
-    }
-
-    private void chooseDataFillingMethod(Scanner scanner) {
-        System.out.println("Выберите метод заполнения данных: ");
-        System.out.println("1. Ручной ввод");
-        System.out.println("2. Из файла");
-        System.out.println("3. Случайные значения");
-
-        int method = scanner.nextInt();
-        switch (method) {
-            case 1:
-                sortManager.fillDataManually();
-                break;
-            case 2:
-                sortManager.fillDataFromFile();
-                break;
-            case 3:
-                sortManager.fillDataRandomly();
-                break;
-            default:
-                System.out.println("Неверный выбор!");
-        }
-    }
-
-    private void performSorting() {
-        sortManager.sortData();
-        System.out.println("Массив отсортирован.");
     }
 
     private void performBinarySearch(Scanner scanner) {
-        System.out.println("Введите значение для поиска: ");
+        System.out.println("Введите тип данных для поика (1.Car 2.Book 3.RootVegetable):");
+        int type = scanner.nextInt();
+        System.out.println("Введите объект для для поиска \"*,*,*\": ");
         String value = scanner.next();
-        int index = searchManager.BinarySearch(value);
-        if (index != -1) {
-            System.out.println("Элемент найден на позиции: " + index);
+        Optional<Integer> index;
+        switch (type) {
+            case 1:
+                Car car = parseStringToCarData("CAR," + value);
+                index = searchExecutor.search(memoryManager.getCarList(), car);
+                break;
+            case 2:
+                Book book = parseStringToBookData("BOOK," + value);
+                index = searchExecutor.search(memoryManager.getBookList(), book);
+                break;
+            case 3:
+                RootVegetable rootVegetable = parseStringToRootVegetableData("ROOT_VEGETABLE," + value);
+                index = searchExecutor.search(memoryManager.getRootVegetableList(), rootVegetable);
+                break;
+            default:
+                System.out.println("Неверный выбор!");
+                return;
+        }
+        if (index.isPresent()) {
+            System.out.println("Элемент найден на позиции: " + index.get());
         } else {
             System.out.println("Элемент не найден.");
+        }
+    }
+
+    private void cleanData() {
+        System.out.println("Введите тип данных для отчистки (1.Car 2.Book 3.RootVegetable):");
+        int type = scanner.nextInt();
+        switch (type) {
+            case 1:
+                memoryManager.getCarList().clear();
+                System.out.println("отчистка завершена");
+                break;
+            case 2:
+                memoryManager.getBookList().clear();
+                System.out.println("отчистка завершена");
+                break;
+            case 3:
+                memoryManager.getRootVegetableList().clear();
+                System.out.println("отчистка завершена");
+                break;
+            default:
+                System.out.println("Неверный выбор");
+        }
+    }
+
+    private void printData() {
+        System.out.println("Введите тип данных для вывода (1.Car 2.Book 3.RootVegetable):");
+        int type = scanner.nextInt();
+        switch (type) {
+            case 1:
+                System.out.println(memoryManager.getCarList());
+                break;
+            case 2:
+                System.out.println(memoryManager.getBookList());
+                break;
+            case 3:
+                System.out.println(memoryManager.getRootVegetableList());
+                break;
+            default:
+                System.out.println("Неверный выбор");
         }
     }
 }
