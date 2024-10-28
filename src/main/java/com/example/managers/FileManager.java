@@ -63,8 +63,7 @@ public class FileManager {
     }
 
     public void load() {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("data.txt"));
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("data.txt"))) {
             while (bufferedReader.ready()) {
                 String data = bufferedReader.readLine();
                 switch (getTypeData(data)) {
